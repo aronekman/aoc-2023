@@ -1,24 +1,15 @@
 import { readFileSync } from 'fs';
-type Card = {
-  instances: number;
-  winningNumbers: number[];
-  ownNumbers: number[];
-};
-const cards: Card[] = [];
+
 const input = readFileSync(`day4/input.txt`, 'utf-8');
-input.split('\n').forEach((row) => {
+const cards = input.split('\n').map((row) => {
   const numbers = row.split(': ')[1].split(' | ');
-  cards.push({
-    instances: 1,
-    winningNumbers: numbers[0]
-      .split(' ')
-      .map((num) => parseInt(num))
-      .filter(Boolean),
-    ownNumbers: numbers[1]
+  const [winningNumbers, ownNumbers] = numbers.map((numbers) =>
+    numbers
       .split(' ')
       .map((num) => parseInt(num))
       .filter(Boolean)
-  });
+  );
+  return { instances: 1, winningNumbers, ownNumbers };
 });
 
 const part1Result = cards.reduce(
@@ -35,9 +26,7 @@ const part1Result = cards.reduce(
 
 cards.forEach((card, index) => {
   const matchings = card.ownNumbers.reduce((prev, number) => {
-    if (card.winningNumbers.includes(number)) {
-      return prev + 1;
-    }
+    if (card.winningNumbers.includes(number)) return prev + 1;
     return prev;
   }, 0);
   for (let i = index + 1; i < cards.length && i < index + matchings + 1; i += 1) {
