@@ -1,5 +1,6 @@
 import { readFileSync } from 'fs';
 
+const startTime = performance.now();
 const input = readFileSync(`day4/input.txt`, 'utf-8');
 const cards = input.split('\n').map((row) => {
   const numbers = row.split(': ')[1].split(' | ');
@@ -37,3 +38,5 @@ cards.forEach((card, index) => {
 const part2Result = cards.reduce((prev, card) => prev + card.instances, 0);
 console.log('Part 1:', part1Result);
 console.log('Part 2:', part2Result);
+
+console.log(`Performance: ${(performance.now() - startTime).toFixed(2)}ms`);
