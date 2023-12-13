@@ -37,11 +37,10 @@ columnsToExpand.forEach((col, index) => {
 
 const combinations = galaxies.map((g1, i) => galaxies.slice(i + 1).map((g2) => [g1, g2])).flat();
 
-const part1Result = combinations.reduce(
+const result = combinations.reduce(
   (prev, curr) => prev + Math.abs(curr[0].y - curr[1].y) + Math.abs(curr[0].x - curr[1].x),
   0
 );
 
-console.log('Part 1:', part1Result);
-console.log('Part 2:', 0);
+console.log('Result:', result);
 console.log(`Performance: ${(performance.now() - startTime).toFixed(2)}ms`);
