@@ -10,7 +10,7 @@ const lines = input.map((row) => {
 let part1Result = 0;
 
 const recursive = (row: string[], counts: number[]): number => {
-  !counts.length ? console.log(row.join(''), counts, row.includes('#') ? 0 : 1) : console.log(row.join(''), counts);
+  //!counts.length ? console.log(row.join(''), counts, row.includes('#') ? 0 : 1) : console.log(row.join(''), counts);
   if (!counts.length) return row.includes('#') ? 0 : 1;
   if (!row.length || counts[0] > row.length) return 0;
   if (row.slice(0, counts[0]).every((c) => c === '?' || c === '#') && row.at(counts[0]) !== '#') {
@@ -21,9 +21,12 @@ const recursive = (row: string[], counts: number[]): number => {
   return recursive(row.slice(1), counts);
 };
 
-lines.slice(9, 10).forEach(({ row, counts }) => {
-  part1Result += recursive(row, counts);
+lines.forEach(({ row, counts }, index) => {
+  const result = recursive(row, counts);
+  console.log(index + 1, result);
+  part1Result += result;
 });
+
 console.log('Part 1:', part1Result);
 console.log('Part 2:', 0);
 console.log(`Performance: ${(performance.now() - startTime).toFixed(2)}ms`);
